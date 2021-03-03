@@ -1,14 +1,14 @@
-from pyfintb.datafeed_chinabond import Chinabond
+#from pyfintb.datafeed_chinabond import Chinabond
 from pyfintb.datafeed_fred import Fred
 from pyfintb.datafeed_wind import Wind
 
-cb = Chinabond()
-chinabond_yield_curve_name = cb.chinabond_yield_curve_name
-chinabond_yield_curve = cb.chinabond_yield_curve
-chinabond_yield = cb.chinabond_yield
-chinabond_yield_series = cb.chinabond_yield_series
+#cb = Chinabond()
+#chinabond_yield_curve_name = cb.chinabond_yield_curve_name
+#chinabond_yield_curve = cb.chinabond_yield_curve
+#chinabond_yield = cb.chinabond_yield
+#chinabond_yield_series = cb.chinabond_yield_series
 
-fred = Fred("be50499de057099bf4700d9dd206e92c")
+fred = Fred("API KEY")
 fred_series = fred.fred_series
 fred_id_info = fred.fred_id_info
 
