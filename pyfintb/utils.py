@@ -30,6 +30,7 @@ def cols_calc(formula, dataframe, col=None):
     return result
 
 def df_groupby_year(df, period="m", method="last"):
+    df = dataframe.copy(deep=True)
     df.columns = ["value"]
     df["year"] = df.index.year
     df["quarter"] = df.index.quarter
@@ -46,6 +47,9 @@ def df_groupby_year(df, period="m", method="last"):
         i.index = i[{"y": "year", "q": "quarter", "m": "month", "w": "week"}[period.lower()]]
         sub_df = i[["value"]]
         sub_df.columns = [year]
+        if period.lower() == "w":
+            sub_df = sub_df.head(52)
+            sub_df.index = list(range(1,min(len(sub_df)+1, 53)))
         result_df = pd.concat([result_df, sub_df], axis=1)
     return result_df
         
