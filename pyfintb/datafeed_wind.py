@@ -237,13 +237,12 @@ class Wind():
         wdata_df = self._wdata2dataframe(wdata_obj)
         if period is None:
             if col is not None:
-                col = to_list(col)
-                wdata_df.columns = col
+                wdata_df.columns = to_list(col)
             return wdata_df
         else:
             temp_idx = pd.date_range(to_pd_timestamp(start_date), to_pd_timestamp(end_date))
             resample_df = pd.DataFrame(wdata_df, index=temp_idx).resample(period).last().ffill()
-            resample_df.columns = code if col is None else col
+            resample_df.columns = code if col is None else to_list(col)
             resample_df.index.freq = resample_df.index.inferred_freq
             f_v_idx = resample_df.first_valid_index()
             l_v_idx = resample_df.last_valid_index()
