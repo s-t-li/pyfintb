@@ -223,7 +223,7 @@ class Wind():
         return result_df
 
     # get macroeconomic data from Wind EDB
-    def wind_edb(self, wcode, start_date, end_date=TODAY, period=None, col=None, **kwargs):
+    def wind_edb(self, wcode, start_date, end_date=TODAY, period=None, fill="forward", col=None, **kwargs):
         code = to_list(wcode)
         code_len = len(code)
         date_len = td_count(start_date, end_date, days="alldays") # conservative count
@@ -241,7 +241,13 @@ class Wind():
             return wdata_df
         else:
             temp_idx = pd.date_range(to_pd_timestamp(start_date), to_pd_timestamp(end_date))
-            resample_df = pd.DataFrame(wdata_df, index=temp_idx).resample(period).last().ffill()
+            resample_df = pd.DataFrame(wdata_df, index=temp_idx).resample(period).last()
+            if (fill is None) or (fill[0].lower() == "f"):
+                resample_df = resample_df.ffill()
+            elif (fill[0].lower() == "b"):
+                resample_df = resample_df.bfill()
+            elif (fill[0].lower() == "l"):
+                pass
             resample_df.columns = code if col is None else to_list(col)
             resample_df.index.freq = resample_df.index.inferred_freq
             f_v_idx = resample_df.first_valid_index()
