@@ -29,7 +29,7 @@ def cols_calc(formula, dataframe, col=None):
     result.columns = [formula] if col is None else [col]
     return result
 
-def df_groupby_year(df, period="m", method="last"):
+def ts_groupby_year(ts, period="m", method="last"):
     df = dataframe.copy(deep=True)
     df.columns = ["value"]
     df["year"] = df.index.year
@@ -52,4 +52,3 @@ def df_groupby_year(df, period="m", method="last"):
             sub_df.index = list(range(1,min(len(sub_df)+1, 53)))
         result_df = pd.concat([result_df, sub_df], axis=1)
     return result_df
-        
