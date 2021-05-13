@@ -50,5 +50,7 @@ def ts_groupby_year(ts, period="m", method="last"):
         if period.lower() == "w":
             sub_df = sub_df.head(52)
             sub_df.index = list(range(1,min(len(sub_df)+1, 53)))
-        result_df = pd.concat([result_df, sub_df], axis=1)
+        sub_df = sub_df.T
+        sub_df.columns.name = ""
+        result_df = pd.concat([result_df, sub_df], axis=0)
     return result_df
