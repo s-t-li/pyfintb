@@ -7,6 +7,8 @@ def to_list(x):
     neat_list = list()
     if isinstance(x, str):
         neat_list = x.replace(" ", "").split(",")
+    elif isinstance(x, np.ndarray):
+        neat_list = x.to_list()
     elif isinstance(x, (list, type({}.keys()), type({}.values()))):
         for i, v in enumerate(x):
             if " " in v:
