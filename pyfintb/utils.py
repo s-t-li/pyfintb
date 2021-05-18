@@ -1,4 +1,5 @@
 import patsy
+import numpy as np
 import pandas as pd
 
 # convert a string with commas(,) to a list
