@@ -255,7 +255,7 @@ class Wind():
             return resample_df.loc[f_v_idx:l_v_idx]
 
     # get cross-sectional data
-    def wind_crosec(self, wcode, field, **kwargs):
+    def wind_crosec(self, wcode, field, col=None, **kwargs):
         if self.is_wind_sectorid(wcode):
             return self.wind_sector_crosec(wcode, field, **kwargs)
         else:
@@ -272,6 +272,7 @@ class Wind():
             if all_fetch_size < self._FUNC_DATA_USAGE_LIMIT["wss"]: # if exceed max data matrix size limitation
                 err_code, wdata_df = w.wss(code, field, usedf=True, **kwargs)
                 self._windapi_err_raise(err_code)
+                wdata_df.columns = to_list(col)
                 return wdata_df
             else:
                 wn.warn("Data usage this time: almost {0} cells".format(all_fetch_size))
@@ -284,6 +285,7 @@ class Wind():
                         sub_df = pd.concat([sub_df, wdata_df], axis=1)
 
                     result_df = result_df.append(sub_df)
+                result_df.columns = to_list(col)
                 return result_df
 
     # get sector cross-sectional data via Wind API
