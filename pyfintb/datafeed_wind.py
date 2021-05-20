@@ -191,8 +191,7 @@ class Wind():
                 if col is None:
                     result_df.columns = code if field_len == 1 else field
                 else:
-                    col = to_list(col)
-                    result_df.columns = col if field_len == 1 else field
+                    result_df.columns = to_list(col)
         else:
             date_idx = gen_pd_datetime_idx(start_date, end_date, **kwargs)
             for sub_date_range in list_slice(date_idx, self._PIECE_LEN):
@@ -216,8 +215,7 @@ class Wind():
                 if col is None:
                     result_df.columns = code if field_len == 1 else field
                 else:
-                    col = to_list(col)
-                    result_df.columns = col if field_len == 1 else field
+                    result_df.columns = to_list(col)
         result_df.index = pd.DatetimeIndex(result_df.index)
         result_df.index.freq = result_df.index.inferred_freq
         return result_df
@@ -285,7 +283,8 @@ class Wind():
                         sub_df = pd.concat([sub_df, wdata_df], axis=1)
 
                     result_df = result_df.append(sub_df)
-                result_df.columns = to_list(col)
+                if col is not None:   
+                    result_df.columns = to_list(col)
                 return result_df
 
     # get sector cross-sectional data via Wind API
