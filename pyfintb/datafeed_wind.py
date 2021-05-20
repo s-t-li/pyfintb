@@ -158,7 +158,7 @@ class Wind():
 
     # get time series data
     def wind_series(self, wcode, field, start_date, end_date=TODAY, col=None, **kwargs):
-        if field.upper() == "EDB": # get data from Wind Economic Database
+        if (not isinstance(field, list)) and (field.upper() == "EDB"): # get data from Wind Economic Database
             return self.wind_edb(wcode, start_date, end_date, col=col, **kwargs)
         code = to_list(wcode)
         field = to_list(field)
